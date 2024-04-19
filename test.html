@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox 예제</title>
+</head>
+<body>
+    <h2>체크박스 예제</h2>
+    <form action="#">
+        <label for="checkbox_all">전체 선택/해제</label>
+        <input type="checkbox" id="checkbox_all" onchange="checkAll()">
+        <br>
+        <div id="checkbox_container"></div>
+        <button onclick="addCheckbox()">체크박스 추가</button>
+    </form>
+
+    <script>
+        var checkboxCount = 0;
+
+        function calculateSum() {
+            var checkboxes = document.querySelectorAll('.checkbox:checked');
+            var sum = 0;
+
+            checkboxes.forEach(function(checkbox) {
+                sum += parseInt(checkbox.value);
+            });
+
+            alert('체크된 수의 합: ' + sum);
+        }
+
+        function checkAll() {
+            var checkboxes = document.querySelectorAll('.checkbox');
+            var checkbox_all = document.getElementById('checkbox_all');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = checkbox_all.checked;
+            });
+
+            calculateSum(); // 전체 선택/해제 후 바로 합을 계산합니다.
+        }
+
+        function addCheckbox() {
+            checkboxCount++;
+            var checkboxContainer = document.getElementById('checkbox_container');
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'checkbox';
+            checkbox.id = 'checkbox' + checkboxCount;
+            checkbox.value = checkboxCount;
+            checkbox.onchange = calculateSum;
+
+            var label = document.createElement('label');
+            label.htmlFor = 'checkbox' + checkboxCount;
+            label.textContent = checkboxCount;
+
+            checkboxContainer.appendChild(checkbox);
+            checkboxContainer.appendChild(label);
+            checkboxContainer.appendChild(document.createElement('br'));
+        }
+    </script>
+</body>
+</html>
